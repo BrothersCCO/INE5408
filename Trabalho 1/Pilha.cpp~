@@ -14,7 +14,7 @@ class EstruturaLinear {
 		EstruturaLinear(int tamanho) {
 			m_vetor = new T[tamanho];
 			m_tamanho = tamanho;
-			m_topo = -1;
+			resetar();
 		}
 		
 		T topo() {
@@ -41,6 +41,9 @@ class EstruturaLinear {
 		}
 		
 		virtual T retirar() = 0;
+		void resetar() {
+			m_topo = -1;
+		}
 
 		bool estaCheio() {
 			return m_topo == m_tamanho - 1;
@@ -61,6 +64,12 @@ class Pilha : public EstruturaLinear<int> {
 		
 		int retirar() {
 			return m_vetor[m_topo--];
+		}
+		
+		void resetar() {
+			EstruturaLinear::resetar();
+			for (int i = 0; i < m_tamanho; ++i)
+				m_vetor[i] = 0;
 		}
 		
 	private:
@@ -105,8 +114,8 @@ int interface() {
 		case 4:
 			if (!p->estaVazio()) {
 				cout << "Posição Valor" << endl;
-				for (int i = 0; i <= p.m_topo; ++i) {
-					printf("%7i %5i\n", i, p.m_vetor[i]);
+				for (int i = 0; i <= p->m_topo; ++i) {
+					printf("%7i %5i", i, p->m_vetor[i]);
 				}
 			} else {
 				cout << "Erro: pilha vazia." << endl;
