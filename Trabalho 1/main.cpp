@@ -9,10 +9,13 @@ using namespace std;
 Stack<int> *stack;
 
 int interface() {
-	cout << "Pilhas:" << endl << "Digite o numero da opção desejada:" << endl
-			<< "1) Empilhar Elemento" << endl << "2) Desempilhar Elemento"
-			<< endl << "3) Limpar Pilha" << endl << "4) Mostrar Pilha" << endl
-			<< "5) Sair do programa" << endl;
+	cout << "Pilhas:" << endl
+		 << "Digite o numero da opção desejada:" << endl
+		 << "1) Empilhar Elemento" << endl
+		 << "2) Desempilhar Elemento" << endl
+		 << "3) Limpar Pilha" << endl
+		 << "4) Mostrar Pilha" << endl
+		 << "5) Sair do programa" << endl;
 	int input, aux;
 	cin >> input;
 	switch (input) {
@@ -42,13 +45,17 @@ int interface() {
 		cout << "Pilha limpa." << endl;
 		break;
 	case 4:
-		if (!stack->isEmpty()) {
-			cout << "Posição Valor" << endl;
-			for (int i = 0, s = stack->length(); i < s; ++i) {
-				printf("%7i %5i\n", i, (*stack)[i]);
-			}
-		} else {
-			cout << "Erro: pilha vazia." << endl;
+		try {
+			cout << "Posição  Valor" << endl;
+			int s = stack->length();
+			if (s > 0)
+				for (int i = 0; i < s; ++i)
+					printf("%3i %10i\n", i, (*stack)[i]);
+			else
+				throw EMPTY_STRUCTURE_ERROR;
+		} catch (int e) {
+			if (e == EMPTY_STRUCTURE_ERROR)
+				cout << "Erro: pilha vazia." << endl;
 		}
 		break;
 	default:

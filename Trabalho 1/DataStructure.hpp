@@ -14,7 +14,7 @@ public:
 	}
 
 	~DataStructure() {
-		delete [] m_array;
+		delete[] m_array;
 	}
 
 	void clear() {
@@ -22,11 +22,10 @@ public:
 	}
 
 	void push(T item) {
-		if (!isFull()) {
+		if (!isFull())
 			m_array[++m_ptr] = item;
-		} else {
+		else
 			throw FULL_STRUCTURE_ERROR;
-		}
 	}
 
 	int length() {
@@ -38,11 +37,13 @@ public:
 	}
 
 	bool isEmpty() {
-		return m_ptr == -1;
+		return length() == 0;
 	}
 
 	T& operator[](int i) {
-		return m_array[i];
+		if (i >= 0 && i <= m_ptr)
+			return m_array[i];
+		throw EMPTY_STRUCTURE_ERROR;
 	}
 
 protected:
