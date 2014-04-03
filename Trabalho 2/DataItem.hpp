@@ -9,19 +9,19 @@ public:
 	DataItem() {
 	}
 
-	DataItem(T *value) {
+	DataItem(T value) {
 		m_value = value;
 	}
 
-	T *get() {
+	T get() {
 		return m_value;
 	}
 
-	void operator=(DataItem<T> *value) {
-		m_value = value->get();
+	void operator=(DataItem<T> value) {
+		m_value = value.get();
 	}
 protected:
-	T *m_value;
+	T m_value;
 };
 
 #endif /* DATAITEM_HPP_ */

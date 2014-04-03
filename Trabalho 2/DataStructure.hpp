@@ -8,7 +8,7 @@ template<typename T>
 class DataStructure {
 public:
 	DataStructure(int size) {
-		m_array = new DataItem<T>[size];
+		//m_array = DataItem<T>[size]();
 		m_size = size;
 		clear();
 	}
@@ -21,9 +21,9 @@ public:
 		m_ptr = -1;
 	}
 
-	void push(T *item) {
+	void push(T item) {
 		if (!isFull())
-			m_array[++m_ptr] = new DataItem<T>(item);
+			m_array[++m_ptr] = new DataItem<T> (item);
 		else
 			throw FULL_STRUCTURE_ERROR;
 	}
@@ -40,14 +40,14 @@ public:
 		return length() == 0;
 	}
 
-	T *operator[](int i) {
+	T operator[](int i) {
 		if (i >= 0 && i <= m_ptr)
 			return m_array[i].get();
 		throw NOT_FOUND_ERROR;
 	}
 
 protected:
-	DataItem<T> *m_array;
+	DataItem<T> m_array;
 	int m_ptr, m_size;
 };
 
