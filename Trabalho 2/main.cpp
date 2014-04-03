@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Queue<char[40]> *queue;
+Queue<char*[40]> *queue;
 
 int interface() {
 	cout << "Filas:" << endl
@@ -18,14 +18,14 @@ int interface() {
 		 << "4) Mostrar Fila" << endl
 		 << "5) Sair do programa" << endl;
 	int input;
-	char aux[40];
+	char *aux[40];
 	cin >> input;
 	switch (input) {
 	case 1:
 		cout << "Digite o elemento a ser enfileirado:" << endl;
-		cin >> aux;
+		cin >> *aux;
 		try {
-			queue->push(aux);
+			queue->push(&aux);
 			cout << "Valor enfileirado corretamente." << endl;
 		} catch (int e) {
 			if (e == FULL_STRUCTURE_ERROR)
@@ -34,13 +34,14 @@ int interface() {
 		break;
 	case 2:
 		cout << "Desenfileirando um valor:" << endl;
-		try {
+		cout << queue->shift() << endl;
+		/*try {
 			aux = queue->shift();
 			cout << "Valor desenfileirado: " << aux << endl;
 		} catch (int e) {
 			if (e == EMPTY_STRUCTURE_ERROR)
 				cout << "Erro: fila vazia." << endl;
-		}
+		}*/
 		break;
 	case 3:
 		queue->clear();
@@ -68,6 +69,6 @@ int interface() {
 }
 
 int main() {
-	queue = new Queue<char[40]>(MAXFILA);
+	queue = new Queue<char*[40]>(MAXFILA);
 	return interface();
 }

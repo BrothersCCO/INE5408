@@ -6,16 +6,19 @@
 template<typename T>
 class DataItem {
 public:
-	DataItem(T value) {
+	DataItem() {
+	}
+
+	DataItem(T *value) {
 		m_value = value;
 	}
 
-	T get() {
+	T *get() {
 		return m_value;
 	}
 
-	bool operator=(T value) {
-		return m_value = value;
+	void operator=(DataItem<T> *value) {
+		m_value = value->get();
 	}
 protected:
 	T *m_value;

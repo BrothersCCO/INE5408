@@ -10,11 +10,11 @@ public:
 			DataStructure<T>(size) {
 	}
 
-	T shift() {
+	T *shift() {
 		if (!this->isEmpty()) {
-			T item = this->m_array[0];
-			for (int i = 0; i < this->m_ptr;)
-				this->m_array[i] = this->m_array[++i];
+			T *item = this->m_array[0].get();
+			for (int i = 0; i < this->m_ptr; ++i)
+				this->m_array[i] = this->m_array[i + 1];
 			--this->m_ptr;
 			return item;
 		} else
