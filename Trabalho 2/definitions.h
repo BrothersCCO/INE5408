@@ -1,7 +1,7 @@
 /*
  * definitions.h
  *
- *  Created on: Apr 2, 2014
+ *  Created on: Apr 3, 2014
  *      Author: ranieri
  */
 
@@ -12,5 +12,6 @@
 #define EMPTY_STRUCTURE_ERROR 2
 #define FORBIDDEN_ERROR 403
 #define NOT_FOUND_ERROR 404
+#define INPUT_TOO_LARGE 413
 
 #endif /* DEFINITIONS_H_ */

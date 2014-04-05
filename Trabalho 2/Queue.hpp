@@ -1,7 +1,14 @@
-#include "DataStructure.hpp"
+/*
+ * Queue.h
+ *
+ *  Created on: Apr 3, 2014
+ *      Author: ranieri
+ */
 
 #ifndef QUEUE_H_
 #define QUEUE_H_
+
+#include "DataStructure.hpp"
 
 template<typename T>
 class Queue: public DataStructure<T> {
@@ -9,16 +16,19 @@ public:
 	Queue(int size) :
 			DataStructure<T>(size) {
 	}
-
-	T *shift() {
+	virtual ~Queue() {
+	}
+	DataItem<T> shift() {
 		if (!this->isEmpty()) {
-			T *item = this->m_array[0].get();
-			for (int i = 0; i < this->m_ptr; ++i)
-				this->m_array[i] = this->m_array[i + 1];
+			DataItem<T> _ = this->m_array[0];
+			for (int i = this->m_ptr; i > 0; --i) {
+				this->m_array[i] = this->m_array[i - 1];
+			}
 			--this->m_ptr;
-			return item;
-		} else
-			throw EMPTY_STRUCTURE_ERROR;
+			return _;
+		}
+		throw EMPTY_STRUCTURE_ERROR;
 	}
 };
-#endif
+
+#endif /* QUEUE_H_ */

@@ -1,8 +1,15 @@
-#include "DataItem.hpp"
-#include "definitions.h"
+/*
+ * DataStructure.h
+ *
+ *  Created on: Apr 3, 2014
+ *      Author: ranieri
+ */
 
 #ifndef DATASTRUCTURE_H_
 #define DATASTRUCTURE_H_
+
+#include "DataItem.hpp"
+#include "definitions.h"
 
 template<typename T>
 class DataStructure {
@@ -14,17 +21,17 @@ public:
 	}
 
 	~DataStructure() {
-		delete[] m_array;
 	}
 
 	void clear() {
 		m_ptr = -1;
 	}
 
-	void push(T *item) {
-		if (!isFull())
-			m_array[++m_ptr] = new DataItem<T>(item);
-		else
+	void push(DataItem<T> item) {
+		if (!isFull()) {
+			++m_ptr;
+			m_array[m_ptr] = item;
+		} else
 			throw FULL_STRUCTURE_ERROR;
 	}
 
@@ -32,17 +39,17 @@ public:
 		return m_ptr + 1;
 	}
 
-	bool isFull() {
-		return length() == m_size;
-	}
-
 	bool isEmpty() {
 		return length() == 0;
 	}
 
-	T *operator[](int i) {
+	bool isFull() {
+		return length() == m_size;
+	}
+
+	DataItem<T> operator[](int i) {
 		if (i >= 0 && i <= m_ptr)
-			return m_array[i].get();
+			return m_array[i];
 		throw NOT_FOUND_ERROR;
 	}
 

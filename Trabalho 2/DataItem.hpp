@@ -1,27 +1,37 @@
-#include "definitions.h"
+#ifndef DATAITEM_H_
+#define DATAITEM_H_
 
-#ifndef DATAITEM_HPP_
-#define DATAITEM_HPP_
+#include <iostream>
 
 template<typename T>
 class DataItem {
 public:
 	DataItem() {
 	}
-
 	DataItem(T *value) {
 		m_value = value;
 	}
+	virtual ~DataItem() {
+	}
 
-	T *get() {
+	void operator=(T value) {
+		m_value = value;
+	}
+
+	/**
+	 * Isso só existe porque no printf eu preciso do valor e não tem como sobrecarregar nada. (acho)
+	 */
+	T *value() {
 		return m_value;
 	}
 
-	void operator=(DataItem<T> *value) {
-		m_value = value->get();
+	friend std::ostream& operator<<(std::ostream &out,
+			const DataItem<T> &cDataItem) {
+		out << cDataItem.m_value;
+		return out;
 	}
 protected:
 	T *m_value;
 };
 
-#endif /* DATAITEM_HPP_ */
+#endif /* DATAITEM_H_ */
