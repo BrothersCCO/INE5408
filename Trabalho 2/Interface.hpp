@@ -14,7 +14,7 @@
 
 class Interface {
 public:
-	Interface(Queue<char[40]>* q) {
+	Interface(Queue<char*>* q) {
 		m_queue = q;
 	}
 	~Interface() {
@@ -37,6 +37,7 @@ public:
 	bool execute() {
 		int option;
 		std::cin >> option;
+		std::cout << option << std::endl;
 		switch (option) {
 		case 1:
 			std::cout << "Digite uma string (sem espaços) a ser enfileirada:"
@@ -56,7 +57,7 @@ public:
 		case 2:
 			std::cout << "Desenfileirando um valor:" << std::endl;
 			try {
-				DataItem<char[40]> value(m_queue->shift());
+				DataItem<char*> value(m_queue->shift());
 				std::cout << "Valor desenfileirando: " << value << std::endl;
 			} catch (int &e) {
 				if (e == EMPTY_STRUCTURE_ERROR) {
@@ -69,13 +70,15 @@ public:
 			std::cout << "Fila limpa." << std::endl;
 			break;
 		case 4:
-			std::cout << "Posição  Valor" << std::endl;
+			std::cout << "Posição\tValor" << std::endl;
 			int s;
 			s = m_queue->length();
 			try {
 				if (s > 0)
-					for (int i = 0; i < s; ++i)
-						printf("%3i %10s\n", i, (*m_queue)[i].value());
+					for (int i = 0; i < s; ++i) {
+						DataItem<char*> _ = (*m_queue)[i];
+						std::cout << i << '\t' << *_.value() << std::endl;
+					}
 				else
 					throw EMPTY_STRUCTURE_ERROR;
 			} catch (int &e) {
@@ -91,14 +94,15 @@ public:
 		return true;
 	}
 
-	DataItem<char[40]> input() {
+	DataItem<char*> input() {
 		char input[40];
-		std::cin >> input;
-		DataItem<char[40]> _(&input);
+		std::cin >> *input;
+		DataItem<char*> _(input);
+		std::cout << *_.value();
 		return _;
 	}
 private:
-	Queue<char[40]> *m_queue;
+	Queue<char*> *m_queue;
 };
 
 #endif /* INTERFACE_H_ */

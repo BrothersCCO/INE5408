@@ -47,6 +47,10 @@ public:
 		return length() == m_size;
 	}
 
+	DataItem<T>* asArray() {
+		return m_array;
+	}
+
 	DataItem<T> operator[](int i) {
 		if (i >= 0 && i <= m_ptr)
 			return m_array[i];

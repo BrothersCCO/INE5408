@@ -7,27 +7,28 @@ template<typename T>
 class DataItem {
 public:
 	DataItem() {
+		m_value = new T;
 	}
-	DataItem(T *value) {
-		m_value = value;
+	DataItem(T value) {
+		m_value = &value;
 	}
 	virtual ~DataItem() {
 	}
 
-	void operator=(T value) {
+	void operator=(T* value) {
 		m_value = value;
 	}
 
 	/**
 	 * Isso só existe porque no printf eu preciso do valor e não tem como sobrecarregar nada. (acho)
 	 */
-	T *value() {
-		return m_value;
+	T value() {
+		return *m_value;
 	}
 
 	friend std::ostream& operator<<(std::ostream &out,
-			const DataItem<T> &cDataItem) {
-		out << cDataItem.m_value;
+			DataItem<T> &cDataItem) {
+		out << cDataItem.value();
 		return out;
 	}
 protected:
