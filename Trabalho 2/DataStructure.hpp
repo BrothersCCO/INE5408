@@ -15,7 +15,7 @@ template<typename T>
 class DataStructure {
 public:
 	DataStructure(int size) {
-		m_array = new DataItem<T>[size];
+		m_array = new T[size];
 		m_size = size;
 		clear();
 	}
@@ -27,7 +27,7 @@ public:
 		m_ptr = -1;
 	}
 
-	void push(DataItem<T> item) {
+	void push(T item) {
 		if (!isFull()) {
 			++m_ptr;
 			m_array[m_ptr] = item;
@@ -47,18 +47,18 @@ public:
 		return length() == m_size;
 	}
 
-	DataItem<T>* asArray() {
+	T* asArray() {
 		return m_array;
 	}
 
-	DataItem<T> operator[](int i) {
+	T operator[](int i) {
 		if (i >= 0 && i <= m_ptr)
 			return m_array[i];
 		throw NOT_FOUND_ERROR;
 	}
 
 protected:
-	DataItem<T> *m_array;
+	T *m_array;
 	int m_ptr, m_size;
 };
 

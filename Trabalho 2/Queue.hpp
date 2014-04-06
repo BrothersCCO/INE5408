@@ -18,9 +18,9 @@ public:
 	}
 	virtual ~Queue() {
 	}
-	DataItem<T> shift() {
+	T shift() {
 		if (!this->isEmpty()) {
-			DataItem<T> _ = this->m_array[0];
+			T _ = this->m_array[0];
 			for (int i = this->m_ptr; i > 0; --i) {
 				this->m_array[i] = this->m_array[i - 1];
 			}

@@ -2,37 +2,28 @@
 #define DATAITEM_H_
 
 #include <iostream>
+#include <cstring>
 
-template<typename T>
 class DataItem {
 public:
 	DataItem() {
-		m_value = new T;
-	}
-	DataItem(T value) {
-		m_value = &value;
-	}
-	virtual ~DataItem() {
 	}
 
-	void operator=(T* value) {
-		m_value = value;
+	DataItem(const char* value) {
+		strcpy(m_value, value);
 	}
 
-	/**
-	 * Isso só existe porque no printf eu preciso do valor e não tem como sobrecarregar nada. (acho)
-	 */
-	T value() {
-		return *m_value;
+	const char *value() {
+		return m_value;
 	}
 
 	friend std::ostream& operator<<(std::ostream &out,
-			DataItem<T> &cDataItem) {
+			DataItem &cDataItem) {
 		out << cDataItem.value();
 		return out;
 	}
 protected:
-	T *m_value;
+	char m_value[40];
 };
 
 #endif /* DATAITEM_H_ */

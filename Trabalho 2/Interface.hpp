@@ -14,7 +14,7 @@
 
 class Interface {
 public:
-	Interface(Queue<char*>* q) {
+	Interface(Queue<DataItem>* q) {
 		m_queue = q;
 	}
 	~Interface() {
@@ -37,7 +37,6 @@ public:
 	bool execute() {
 		int option;
 		std::cin >> option;
-		std::cout << option << std::endl;
 		switch (option) {
 		case 1:
 			std::cout << "Digite uma string (sem espaços) a ser enfileirada:"
@@ -57,7 +56,7 @@ public:
 		case 2:
 			std::cout << "Desenfileirando um valor:" << std::endl;
 			try {
-				DataItem<char*> value(m_queue->shift());
+				DataItem value(m_queue->shift());
 				std::cout << "Valor desenfileirando: " << value << std::endl;
 			} catch (int &e) {
 				if (e == EMPTY_STRUCTURE_ERROR) {
@@ -76,7 +75,7 @@ public:
 			try {
 				if (s > 0)
 					for (int i = 0; i < s; ++i) {
-						DataItem<char*> _ = (*m_queue)[i];
+						DataItem _ = (*m_queue)[i];
 						std::cout << i << '\t' << *_.value() << std::endl;
 					}
 				else
@@ -90,19 +89,21 @@ public:
 		case 5:
 			return false;
 			break;
+		default:
+			std::cout << "Erro " << option << std::endl;
+			return false;
 		}
 		return true;
 	}
 
-	DataItem<char*> input() {
+	DataItem input() {
 		char input[40];
 		std::cin >> *input;
-		DataItem<char*> _(input);
-		std::cout << *_.value();
+		DataItem _(input);
 		return _;
 	}
 private:
-	Queue<char*> *m_queue;
+	Queue<DataItem> *m_queue;
 };
 
 #endif /* INTERFACE_H_ */
