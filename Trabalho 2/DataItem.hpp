@@ -17,8 +17,11 @@ public:
 		return m_value;
 	}
 
-	friend std::ostream& operator<<(std::ostream &out,
-			DataItem &cDataItem) {
+	void operator=(DataItem &cDataItem) {
+		strcpy(m_value, cDataItem.value());
+	}
+
+	friend std::ostream& operator<<(std::ostream &out, DataItem &cDataItem) {
 		out << cDataItem.value();
 		return out;
 	}

@@ -21,9 +21,8 @@ public:
 	T shift() {
 		if (!this->isEmpty()) {
 			T _ = this->m_array[0];
-			for (int i = this->m_ptr; i > 0; --i) {
-				this->m_array[i] = this->m_array[i - 1];
-			}
+			for (int i = 0; i < this->m_ptr; ++i)
+				this->m_array[i] = this->m_array[i + 1];
 			--this->m_ptr;
 			return _;
 		}

@@ -8,9 +8,11 @@
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
-#include <stdio.h>
 #include "definitions.h"
 #include "Queue.hpp"
+#include <iostream>
+#include <cstring>
+#include <string>
 
 class Interface {
 public:
@@ -45,23 +47,21 @@ public:
 				m_queue->push(input());
 				std::cout << "String enfileirada corretamente." << std::endl;
 			} catch (int &e) {
-				if (e == FULL_STRUCTURE_ERROR) {
+				if (e == FULL_STRUCTURE_ERROR)
 					std::cout << "Erro: fila cheia." << std::endl;
-				} else if (e == INPUT_TOO_LARGE) {
+				else if (e == INPUT_TOO_LARGE)
 					std::cout << "String muito grande para enfileirar."
 							<< std::endl;
-				}
 			}
 			break;
 		case 2:
 			std::cout << "Desenfileirando um valor:" << std::endl;
 			try {
-				DataItem value(m_queue->shift());
+				DataItem value = m_queue->shift();
 				std::cout << "Valor desenfileirando: " << value << std::endl;
 			} catch (int &e) {
-				if (e == EMPTY_STRUCTURE_ERROR) {
+				if (e == EMPTY_STRUCTURE_ERROR)
 					std::cout << "Erro: fila vazia." << std::endl;
-				}
 			}
 			break;
 		case 3:
@@ -74,33 +74,31 @@ public:
 			s = m_queue->length();
 			try {
 				if (s > 0)
-					for (int i = 0; i < s; ++i) {
-						DataItem _ = (*m_queue)[i];
-						std::cout << i << '\t' << *_.value() << std::endl;
-					}
+					for (int i = 0; i < s; ++i)
+						std::cout << i << '\t' << (*m_queue)[i].value()
+								<< std::endl;
 				else
 					throw EMPTY_STRUCTURE_ERROR;
 			} catch (int &e) {
-				if (e == EMPTY_STRUCTURE_ERROR) {
+				if (e == EMPTY_STRUCTURE_ERROR)
 					std::cout << "Erro: fila vazia." << std::endl;
-				}
 			}
 			break;
 		case 5:
 			return false;
 			break;
-		default:
-			std::cout << "Erro " << option << std::endl;
-			return false;
 		}
 		return true;
 	}
 
 	DataItem input() {
-		char input[40];
-		std::cin >> *input;
-		DataItem _(input);
-		return _;
+		std::string input;
+		std::cin >> input;
+		if (input.length() <= 40) {
+			DataItem _(input.c_str());
+			return _;
+		}
+		throw INPUT_TOO_LARGE;
 	}
 private:
 	Queue<DataItem> *m_queue;
