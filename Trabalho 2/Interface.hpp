@@ -11,7 +11,6 @@
 #include "definitions.h"
 #include "Queue.hpp"
 #include <iostream>
-#include <cstring>
 #include <string>
 
 class Interface {
