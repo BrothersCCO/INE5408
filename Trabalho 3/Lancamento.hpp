@@ -11,8 +11,6 @@
 class Lancamento {
 public:
 	Lancamento() {
-		this->m_nome = new char[0];
-		this->m_valor = 0.0;
 	}
 
 	Lancamento(char* nome, double valor) {

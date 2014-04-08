@@ -16,7 +16,7 @@ template<typename T>
 class List: public Stack<T>, public Queue<T> {
 public:
 	List(int size) :
-			Stack<T>::Stack(size), Queue<T>::Queue(size) {
+			DataStructure<T>::DataStructure(size), Stack<T>::Stack(size), Queue<T>::Queue(size) {
 	}
 
 	bool has(T value) {

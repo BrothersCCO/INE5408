@@ -18,12 +18,12 @@
 class ListaContabil: public List<Lancamento> {
 public:
 	ListaContabil() :
-			List<Lancamento>::List(MAXLISTA) {
+		DataStructure<Lancamento>::DataStructure(MAXLISTA), List<Lancamento>::List(MAXLISTA) {
 	}
 
 	int adiciona(Lancamento value) {
 		try {
-			this->Stack<Lancamento>::push(value);
+			this->DataStructure<Lancamento>::push(value);
 			return 0;
 		} catch (int &e) {
 			return e;
@@ -31,11 +31,11 @@ public:
 	}
 
 	void destroiLista() {
-		this->Stack<Lancamento>::clear();
+		this->DataStructure<Lancamento>::clear();
 	}
 
 	bool listaVazia() {
-		return this->Stack<Lancamento>::isEmpty();
+		return this->DataStructure<Lancamento>::isEmpty();
 	}
 
 	Lancamento mostra(int index) {
@@ -56,7 +56,7 @@ public:
 	}
 
 	int verUltimo() {
-		return this->Stack<Lancamento>::m_ptr;
+		return this->DataStructure<Lancamento>::m_ptr;
 	}
 };
 
