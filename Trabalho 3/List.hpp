@@ -15,8 +15,11 @@
 template<typename T>
 class List: public Stack<T>, public Queue<T> {
 public:
+	using DataStructure<T>::length;
+
 	List(int size) :
-			DataStructure<T>::DataStructure(size), Stack<T>::Stack(size), Queue<T>::Queue(size) {
+			DataStructure<T>::DataStructure(size), Stack<T>::Stack(size), Queue<
+					T>::Queue(size) {
 	}
 
 	bool has(T value) {
@@ -31,18 +34,15 @@ public:
 	}
 
 	T peek(int index) {
-		if (index >= 0 && index <= this->m_ptr)
+		if (index >= 0 && index < this->length())
 			return this->m_array[index];
 		throw NOT_FOUND_ERROR;
 	}
 
 	T pop(int index) {
-		if (index >= 0 && index <= this->m_ptr) {
-			T tmp = this->m_array[index];
-			closeSpaceAt(index);
-			return tmp;
-		}
-		throw NOT_FOUND_ERROR;
+		T tmp = this->peek(index);
+		closeSpaceAt(index);
+		return tmp;
 	}
 
 	T popValue(T value) {
@@ -57,7 +57,7 @@ public:
 	void pushOrdered(T value) {
 		if (!this->isFull()) {
 			int i;
-			for (i = 0; i <= this->m_ptr; ++i)
+			for (i = 0; i < this->length(); ++i)
 				if (this->m_array[i] < value)
 					break;
 			push(i, value);
@@ -69,7 +69,7 @@ public:
 	}
 private:
 	int find(T value) {
-		for (int i = 0; i <= this->m_ptr; ++i)
+		for (int i = 0; i < this->length(); ++i)
 			if (this->m_array[i] == value)
 				return i;
 		throw NOT_FOUND_ERROR;
@@ -77,9 +77,9 @@ private:
 
 	void closeSpaceAt(int index) {
 		if (!this->isEmpty()) {
-			if (index >= 0 && index <= this->m_ptr) {
+			if (index >= 0 && index < this->length()) {
 				--this->m_ptr;
-				for (int i = index; i < this->m_ptr; ++i)
+				for (int i = index; i < this->length(); ++i)
 					this->m_array[i] = this->m_array[i + 1];
 			} else
 				throw FORBIDDEN_ERROR;
@@ -89,9 +89,9 @@ private:
 
 	void openSpaceAt(int index) {
 		if (!this->isFull()) {
-			if (index >= 0 && index <= this->m_ptr) {
+			if (index >= 0 && index < this->length()) {
 				++this->m_ptr;
-				for (int i = index; i < this->m_ptr; ++i)
+				for (int i = index; i < this->length(); ++i)
 					this->m_array[i + 1] = this->m_array[i];
 			} else
 				throw FORBIDDEN_ERROR;
