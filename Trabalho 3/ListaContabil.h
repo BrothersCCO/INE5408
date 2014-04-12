@@ -12,30 +12,30 @@
 #include "Lancamento.hpp"
 #include "List.hpp"
 
-#define ERROLISTACHEIA EMPTY_STRUCTURE_ERROR
+#define ERROLISTACHEIA FULL_STRUCTURE_ERROR
 #define ERROPOSICAOLAN NOT_FOUND_ERROR
 
 class ListaContabil: public List<Lancamento> {
 public:
 	ListaContabil() :
-		DataStructure<Lancamento>::DataStructure(MAXLISTA), List<Lancamento>::List(MAXLISTA) {
+		List<Lancamento>::List(MAXLISTA) {
 	}
 
 	int adiciona(Lancamento value) {
 		try {
-			this->DataStructure<Lancamento>::push(value);
+			this->push(value);
 			return 0;
-		} catch (int &e) {
+		} catch (int e) {
 			return e;
 		}
 	}
 
 	void destroiLista() {
-		this->DataStructure<Lancamento>::clear();
+		this->clear();
 	}
 
 	bool listaVazia() {
-		return this->DataStructure<Lancamento>::isEmpty();
+		return this->isEmpty();
 	}
 
 	Lancamento mostra(int index) {
@@ -46,7 +46,7 @@ public:
 		try {
 			this->pop(index);
 			return 0;
-		} catch (int &e) {
+		} catch (int e) {
 			return e;
 		}
 	}
@@ -56,7 +56,7 @@ public:
 	}
 
 	int verUltimo() {
-		return this->DataStructure<Lancamento>::m_ptr;
+		return this->m_ptr;
 	}
 };
 

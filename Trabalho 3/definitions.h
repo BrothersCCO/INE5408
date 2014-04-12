@@ -14,6 +14,6 @@
 #define NOT_FOUND_ERROR 404
 #define INPUT_TOO_LARGE 413
 
-#define MAXLISTA 100
+#define MAXLISTA 2
 
 #endif /* DEFINITIONS_H_ */

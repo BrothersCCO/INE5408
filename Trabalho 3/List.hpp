@@ -8,18 +8,18 @@
 #ifndef LIST_HPP_
 #define LIST_HPP_
 
+#include <cstring>
 #include "definitions.h"
-#include "Queue.hpp"
-#include "Stack.hpp"
 
 template<typename T>
-class List: public Stack<T>, public Queue<T> {
+class List {
 public:
-	using DataStructure<T>::length;
-
 	List(int size) :
-			DataStructure<T>::DataStructure(size), Stack<T>::Stack(size), Queue<
-					T>::Queue(size) {
+			m_array(new T[size]), m_ptr(-1), m_size(size) {
+	}
+
+	void clear() {
+		m_ptr = -1;
 	}
 
 	bool has(T value) {
@@ -33,20 +33,44 @@ public:
 		}
 	}
 
+	bool isEmpty() {
+		return length() == 0;
+	}
+
+	bool isFull() {
+		return length() == m_size;
+	}
+
+	int length() {
+		return m_ptr + 1;
+	}
+
 	T peek(int index) {
-		if (index >= 0 && index < this->length())
+		if (index >= 0 && index < this->length()) {
 			return this->m_array[index];
+		}
 		throw NOT_FOUND_ERROR;
 	}
 
+	T pop() {
+		return this->pop(this->length() - 1);
+	}
+
 	T pop(int index) {
-		T tmp = this->peek(index);
-		closeSpaceAt(index);
-		return tmp;
+		if (index >= 0 && index <= this->m_ptr) {
+			T tmp = this->m_array[index];
+			closeSpaceAt(index);
+			return tmp;
+		}
+		throw NOT_FOUND_ERROR;
 	}
 
 	T popValue(T value) {
 		return pop(find(value));
+	}
+
+	void push(T value) {
+		this->push(this->length(), value);
 	}
 
 	void push(int index, T value) {
@@ -57,18 +81,22 @@ public:
 	void pushOrdered(T value) {
 		if (!this->isFull()) {
 			int i;
-			for (i = 0; i < this->length(); ++i)
+			for (i = 0; i <= this->m_ptr; ++i)
 				if (this->m_array[i] < value)
 					break;
 			push(i, value);
 		}
 	}
 
+	T shift() {
+		return this->pop(0);
+	}
+
 	void unshift(T value) {
 		push(0, value);
 	}
-private:
-	int find(T value) {
+protected:
+	int find(const T& value) {
 		for (int i = 0; i < this->length(); ++i)
 			if (this->m_array[i] == value)
 				return i;
@@ -89,15 +117,18 @@ private:
 
 	void openSpaceAt(int index) {
 		if (!this->isFull()) {
-			if (index >= 0 && index < this->length()) {
+			if (index >= 0 && index <= this->length()) {
 				++this->m_ptr;
-				for (int i = index; i < this->length(); ++i)
+				for (int i = this->length(); i >= index; --i)
 					this->m_array[i + 1] = this->m_array[i];
 			} else
 				throw FORBIDDEN_ERROR;
 		} else
 			throw FULL_STRUCTURE_ERROR;
 	}
+
+	T *m_array;
+	int m_ptr, m_size;
 };
 
 #endif /* LIST_HPP_ */

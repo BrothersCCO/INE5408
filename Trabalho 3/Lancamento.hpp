@@ -8,25 +8,22 @@
 #ifndef LANCAMENTO_HPP_
 #define LANCAMENTO_HPP_
 
-#include <cstring>
-
 class Lancamento {
 public:
 	Lancamento() {
 	}
 
 	Lancamento(char* nome, double valor) {
-		m_nome = new char[strlen(nome) + 1];
-		strcpy(m_nome, nome);
-		m_valor = valor;
+		this->m_nome = nome;
+		this->m_valor = valor;
 	}
 
 	char* nome() {
-		return m_nome;
+		return this->m_nome;
 	}
 
 	double valor() {
-		return m_valor;
+		return this->m_valor;
 	}
 private:
 	char* m_nome;
