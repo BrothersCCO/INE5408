@@ -4,7 +4,8 @@
 
 template<class T>
 LinkedList<T>::LinkedList() {
-	this->head/* = this->tail*/= this->length = 0;
+	this->head = 0;
+    this->length = 0;
 }
 
 template<class T>
@@ -30,42 +31,42 @@ bool LinkedList<T>::empty() {
 }
 
 template<class T>
-void LinkedList<T>::insert(size_type position, const T& item) {
+void LinkedList<T>::insert(size_type position, T* item) {
 	if (position == 0) {
 		this->unshift(item);
-	} else if (position <= this->length + 1) {
+	} else if (position < this->length + 1) {
 		Node<T> *previous = this->head;
-		for (size_type i = 1; i <= position; ++i) {
-			previous = previous->next;
+		for (size_type i = 1; i < position; ++i) {
+			previous = previous->getNext();
 		}
-		Node<T> *current = new Node<T>(item, previous->next);
-		previous->next = current;
+		Node<T> *current = new Node<T>(item, previous->getNext());
+		previous->setNext(current);
 		++this->length;
 	}
 }
 
 template<class T>
-T &LinkedList<T>::pop() {
-	return this->remove(this->length);
+T *LinkedList<T>::pop() {
+	return this->remove(this->length - 1);
 }
 
 template<class T>
-void LinkedList<T>::push(const T& item) {
-	this->insert(this->length + 1, item);
+void LinkedList<T>::push(T* item) {
+	this->insert(this->length, item);
 }
 
 template<class T>
-T &LinkedList<T>::remove(size_type position) {
+T *LinkedList<T>::remove(size_type position) {
 	if (!this->empty()) {
 		if (position == 0) {
 			return this->shift();
 		} else if (position < this->length) {
 			Node<T> *previous = this->head;
 			for (size_type i = 1; i < position; ++i) {
-				previous = previous->next;
+				previous = previous->getNext();
 			}
-			T *_ = previous->next->item;
-			previous->next = previous->next->next;
+			T *_ = previous->getNext()->getItem();
+			previous->setNext(previous->getNext()->getNext());
 			--this->length;
 			return _;
 		}
@@ -75,10 +76,10 @@ T &LinkedList<T>::remove(size_type position) {
 }
 
 template<class T>
-T &LinkedList<T>::shift() {
+T *LinkedList<T>::shift() {
 	if (!this->empty()) {
-		T *_ = this->head->item;
-		this->head = this->head->next;
+		T *_ = this->head->getItem();
+		this->head = this->head->getNext();
 		--this->length;
 		return _;
 	} else {
@@ -87,7 +88,7 @@ T &LinkedList<T>::shift() {
 }
 
 template<class T>
-void LinkedList<T>::unshift(const T& item) {
+void LinkedList<T>::unshift(T* item) {
 	Node<T> *current = new Node<T>(item, this->head);
 	this->head = current;
 	++this->length;
@@ -110,8 +111,9 @@ LinkedList<T>::iterator::iterator(Node<T> *ptr) {
 
 template<class T>
 typename LinkedList<T>::iterator& LinkedList<T>::iterator::operator++() {
-	if (this->ptr->next != 0) {
-		this->ptr = this->ptr->next;
+	if (this->ptr != 0) {
+		this->ptr = this->ptr->getNext();
+        return *this;
 	} else {
 		throw NOT_FOUND_ERROR;
 	}
@@ -120,9 +122,9 @@ typename LinkedList<T>::iterator& LinkedList<T>::iterator::operator++() {
 template<class T>
 typename LinkedList<T>::iterator LinkedList<T>::iterator::operator++(
 		const int) {
-	if (this->ptr->next != 0) {
+	if (this->ptr != 0) {
 		LinkedList<T>::iterator *_ = this->ptr;
-		this->ptr = this->ptr->next;
+		this->ptr = this->ptr->getNext();
 		return _;
 	} else {
 		throw NOT_FOUND_ERROR;
@@ -131,12 +133,12 @@ typename LinkedList<T>::iterator LinkedList<T>::iterator::operator++(
 
 template<class T>
 T &LinkedList<T>::iterator::operator*() {
-	return this->ptr;
+	return this->ptr->getItem();
 }
 
 template<class T>
 T *LinkedList<T>::iterator::operator->() {
-	return this->ptr;
+	return this->ptr->getItem();
 }
 
 template<class T>

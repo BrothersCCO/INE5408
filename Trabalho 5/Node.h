@@ -4,11 +4,12 @@
 template<class T>
 class Node {
 public:
-	Node(const T&, const T*);
+	Node(T*, Node<T>*);
 	virtual ~Node();
 	bool operator==(const Node<T>*);
 	bool operator<(const Node<T>*);
 
+    T *getItem();
 	Node<T> *getNext();
 	void setNext(Node<T> *next);
 
@@ -16,5 +17,7 @@ private:
 	T *value;
 	Node<T> *next;
 };
+
+#include "Node.tpp"
 
 #endif /* NODE_H_ */

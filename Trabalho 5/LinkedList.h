@@ -13,12 +13,12 @@ public:
 	size_type count();
 	void destroy();
 	bool empty();
-	void insert(size_type, const T&);
-	T &pop();
-	void push(const T&);
-	T &remove(size_type);
-	T &shift();
-	void unshift(const T&);
+	void insert(size_type, T*);
+	T *pop();
+	void push(T*);
+	T *remove(size_type);
+	T *shift();
+	void unshift(T*);
 
 	class iterator;
 	iterator begin();
@@ -41,5 +41,7 @@ public:
 private:
 	Node<T> *ptr;
 };
+
+#include "LinkedList.tpp"
 
 #endif /* LINKEDLIST_H_ */

@@ -1,14 +1,9 @@
-/*
- * Lancamento.cpp
- *
- *  Created on: Apr 21, 2014
- *      Author: ranieri
- */
-
 #include "Lancamento.h"
+#include <cstring>
 
 Lancamento::Lancamento(char* nome, double valor) {
-	this->_nome = nome;
+	this->_nome = new char[strlen(nome) + 1];
+    strcpy(this->_nome, nome);
 	this->_valor = valor;
 }
 

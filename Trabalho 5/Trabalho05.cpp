@@ -25,7 +25,7 @@ void listarTran() {
 		int i = 0;
 		for (ListaContabil::iterator it = listaAtual->begin();
 				it != listaAtual->end(); ++it) {
-			printf("(%i) %s %.2f\n", ++i, it->nome(), it->valor());
+			printf("(%i) %s %.2f\n", i++, it->nome(), it->valor());
 		}
 	}
 }
@@ -102,7 +102,7 @@ void lancarTran() {
 	 tem que ser tratado no construtor do lançamento para ocupar o menor
 	 espaço em memoria possivel. Isso vale 1 ponto na nota do trabalho!
 	 */
-	Lancamento lan = Lancamento((char *) nome.c_str(), valor);
+	Lancamento *lan = new Lancamento((char *) nome.c_str(), valor);
 
 	// Teste de erro de lista cheia removido - a lista encadeada não enche (antes do PC travar)
 	listaAtual->push(lan);

@@ -10,6 +10,7 @@
 
 class Lancamento {
 public:
+    Lancamento();
 	Lancamento(char*, double);
 	virtual ~Lancamento();
 	char* nome();

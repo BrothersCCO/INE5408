@@ -1,14 +1,16 @@
 #include "Node.h"
 
+#include <iostream>
+
 template<class T>
-Node<T>::Node(const T& value, const T* next = 0) {
+Node<T>::Node(T* value, Node<T>* next) {
 	this->value = value;
 	this->next = next;
 }
 
 template<class T>
 Node<T>::~Node() {
-	delete this->value;
+	this->value = 0;
 	this->next = 0;
 }
 
@@ -20,6 +22,11 @@ bool Node<T>::operator==(const Node<T>* cLinkedListItem) {
 template<class T>
 bool Node<T>::operator<(const Node<T>* cLinkedListItem) {
 	return *(this->value) < *(cLinkedListItem->value);
+}
+
+template<class T>
+T *Node<T>::getItem() {
+    return this->value;
 }
 
 template<class T>
