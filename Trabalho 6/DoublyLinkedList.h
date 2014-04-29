@@ -1,5 +1,5 @@
 #include <iostream>
-#include <exception>
+#include <stdexcept>
 
 #ifndef DOUBLYLINKEDLIST_H_
 #define DOUBLYLINKEDLIST_H_
@@ -10,10 +10,6 @@ class DoublyLinkedList {
 	public:
 		node(node* pred, node* succ, const T& item) :
 				pred(pred), succ(succ), item(item) {
-		}
-
-		~node() {
-			delete &item;
 		}
 
 		node* pred;
@@ -27,7 +23,8 @@ class DoublyLinkedList {
 	}
 
 	T removeOnlyNode() {
-		T removed = head->item;
+		T removed = this->head->item;
+		delete this->head;
 		this->head = this->tail = 0;
 		--this->count;
 		return removed;
@@ -43,6 +40,12 @@ public:
 	}
 
 	virtual ~DoublyLinkedList() {
+		node* aux = this->head;
+		for (int i = 0; i < this->count; ++i) {
+			aux = this->head;
+			this->head = this->head->succ;
+			delete aux;
+		}
 	}
 
 	bool empty() const {
@@ -71,15 +74,14 @@ public:
 			exNode->pred = inserted;
 			++this->count;
 		} else {
-			throw std::range_error("Index out of range");
+			throw std::out_of_range("Index out of range");
 		}
 	}
 
 	void push(const T& item) {
 		if (this->count) {
-			node* inserted = new node(this->tail, 0, item);
-			this->tail->succ = inserted;
-			this->tail = inserted;
+			this->tail = new node(this->tail, 0, item);
+			this->tail->pred->succ = this->tail;
 			++this->count;
 		} else {
 			this->insertFirstNode(item);
@@ -88,9 +90,8 @@ public:
 
 	void unshift(const T& item) {
 		if (this->count) {
-			node* inserted = new node(0, this->head, item);
-			this->head->pred = inserted;
-			this->head = inserted;
+			this->head = new node(0, this->head, item);
+			this->head->succ->pred = this->head;
 			++this->count;
 		} else {
 			this->insertFirstNode(item);
@@ -103,15 +104,15 @@ public:
 	T pop() {
 		if (this->count > 1) {
 			T removed = this->tail->item;
-			node* exTail = this->tail;
-			this->tail = exTail->pred;
+			this->tail = this->tail->pred;
+			delete this->tail->succ;
 			this->tail->succ = 0;
 			--this->count;
 			return removed;
 		} else if (this->count) {
 			return this->removeOnlyNode();
 		} else {
-			throw std::range_error("Empty list.");
+			throw std::out_of_range("Empty list.");
 		}
 	}
 
@@ -120,31 +121,33 @@ public:
 			return this->shift();
 		} else if (position == this->count - 1) {
 			return this->pop();
-		} else if (position > 0 && position < this->count) {
-			node* ex = this->head; // será o nó que estava na posição escolhida
-			for (int i = 0; i < position; ++i) {
-				ex = ex->succ;
-			}
-			T removed = ex->item;
-			ex->pred->succ = ex->succ;
-			ex->succ->pred = ex->pred;
-			--this->count;
-			return removed;
+		} else if (position < 0 && position >= this->count) {
+			throw std::out_of_range("Invalid position.");
 		}
+		node* exNode = this->head; // será o nó que estava na posição escolhida
+		for (int i = 0; i < position; ++i) {
+			exNode = exNode->succ;
+		}
+		T removed = exNode->item;
+		exNode->pred->succ = exNode->succ;
+		exNode->succ->pred = exNode->pred;
+		delete exNode;
+		--this->count;
+		return removed;
 	}
 
 	T shift() {
-		if (this->count > 1) {
+		if (this->count == 0) {
+			throw std::out_of_range("Empty list.");
+		} else if (this->count > 1) {
 			T removed = this->head->item;
-			node* exHead = this->head;
-			this->head = exHead->succ;
+			this->head = this->head->succ;
+			delete this->head->pred;
 			this->head->pred = 0;
 			--this->count;
 			return removed;
-		} else if (this->count) {
-			return this->removeOnlyNode();
 		} else {
-			throw std::range_error("Empty list.");
+			return this->removeOnlyNode();
 		}
 	}
 

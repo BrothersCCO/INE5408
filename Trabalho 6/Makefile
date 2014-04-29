@@ -1,17 +1,7 @@
-CC = GCC
-LDFLAGS = -lgtest
+EXEC = DoublyLinkedList
+TEST = $(EXEC)Test
+COMMON_SRC =
+TEST_SRC = $(COMMON_SRC) $(TEST) mainTest 
+MAIN_SRC = $(COMMON_SRC) main
 
-all: run_tests
-
-run_tests: test
-	./$<
-
-clean:
-	rm test *.o
-
-test: mainTest.o DoublyLinkedListTest.o
-	clang++ $(LDFLAGS) -o $@ $^
-
-.c.o:
-	$(CC) -c $<
-
+include ../Makecommon
