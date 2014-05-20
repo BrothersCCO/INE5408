@@ -9,20 +9,21 @@
 #define CLIENT_H_
 
 #include "../structures/CircularlyLinkedList.h"
+#include "ClientQueueBehavior.h"
 
-enum PaymentBehavior { CHECK, MONEY };
-enum QueueBehavior { SHORTEST, SMALLEST };
+enum ClientPaymentBehavior { CHECK, MONEY };
 
 class Client {
-	PaymentBehavior pb;
-	QueueBehavior qb;
+	ClientPaymentBehavior paymentBehavior;
+	ClientQueueBehavior* queueBehavior;
 
 public:
 	Client();
-	Client(const PaymentBehavior&, const QueueBehavior&);
+	Client(const ClientPaymentBehavior&, const ClientQueueBehavior&);
 	virtual ~Client();
 
-	void enterBestQueue(const CircularlyLinkedList<Client>&);
+	void enterBestQueue(const QueueList&) const;
+	int cartSize() const;
 };
 
 #endif /* CLIENT_H_ */

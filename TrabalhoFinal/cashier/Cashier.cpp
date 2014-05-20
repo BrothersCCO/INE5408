@@ -7,8 +7,8 @@
 
 #include "Cashier.h"
 
-Cashier::Cashier(const string& name, const double wage) :
-		name(name), wage(wage) {
+Cashier::Cashier(const string& name, double salary, int efficiency, int, bool) :
+		name(name), _salary(salary), _efficiency(efficiency) {
 }
 
 Cashier::~Cashier() {

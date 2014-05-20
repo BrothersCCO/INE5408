@@ -7,12 +7,10 @@
 
 #include "Client.h"
 
-Client::Client() :
-		pb(), qb() {
-}
-
-Client::Client(const PaymentBehavior& pb, const QueueBehavior& qb) :
-		pb(pb), qb(qb) {
+Client::Client(const ClientPaymentBehavior& paymentBehavior,
+		const ClientQueueBehavior& queueBehavior) :
+		paymentBehavior(paymentBehavior), queueBehavior(
+				&queueBehavior.getInstance()) {
 }
 
 Client::~Client() {

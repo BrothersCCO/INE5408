@@ -70,7 +70,7 @@ class CircularlyLinkedList {
 		}
 
 		U* operator->() const {
-			return this->ptr->item;
+			return &(this->ptr->item);
 		}
 
 	private:

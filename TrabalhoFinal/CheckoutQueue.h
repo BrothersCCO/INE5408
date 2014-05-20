@@ -8,13 +8,15 @@
 #ifndef CHECKOUTQUEUE_H_
 #define CHECKOUTQUEUE_H_
 
-#include "cashier/Cashier.h"
 #include "structures/CircularlyLinkedList.h"
+#include "cashier/Cashier.h"
 #include "client/Client.h"
+
+typedef CircularlyLinkedList<Client> ClientList;
 
 class CheckoutQueue {
 	Cashier cashier;
-	CircularlyLinkedList<Client> queue;
+	ClientList queue;
 	int servedClients;
 	int totalIncome;
 
@@ -22,7 +24,9 @@ public:
 	CheckoutQueue(const Cashier&);
 	virtual ~CheckoutQueue();
 
-	void enter(const Client&);
+	void enter(const Client&) const;
+	int length() const;
+	int totalItems() const;
 };
 
 #endif /* CHECKOUTQUEUE_H_ */

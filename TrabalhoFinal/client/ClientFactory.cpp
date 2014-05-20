@@ -7,7 +7,6 @@
 
 #include "ClientFactory.h"
 #include "Client.h"
-#include <cstdlib>
 
 ClientFactory::ClientFactory() {
 	// TODO Auto-generated constructor stub
@@ -19,13 +18,8 @@ ClientFactory::~ClientFactory() {
 }
 
 Client ClientFactory::create() {
-	PaymentBehavior pb = MONEY;
-	if (rand() % 10 < 2) {
-		pb = CHECK;
-	}
-
-	QueueBehavior qb = SMALLEST;
-	// TODO: shortest?
+	PaymentBehavior* pb = rand() % 5 ? &money : &check;
+	QueueBehavior* qb = rand() % 2 ? &fewerItems : &shorterQueue;
 
 	return Client(pb, qb);
 }

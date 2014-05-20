@@ -20,3 +20,14 @@ CheckoutQueue::~CheckoutQueue() {
 void CheckoutQueue::enter(const Client& client) {
 	queue.push_back(client);
 }
+
+void CheckoutQueue::enter(const Client& client) {
+	int total{0};
+	for (ClientList::const_iterator it = queue.begin(); it != queue.end(); ++it) {
+		total += it->cartSize();
+	}
+}
+
+void CheckoutQueue::enter(const Client& client) {
+	queue.push_back(client);
+}

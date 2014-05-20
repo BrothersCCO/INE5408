@@ -5,13 +5,18 @@
 
 using std::string;
 
+enum CashierProcessBehavior { FAST, MEDIUM, SLOW };
+
 class Cashier {
 	string name;
-	double wage;
+	double _salary;
+	int _efficiency;
 
 public:
-	Cashier(const string&, const double);
+	Cashier(const string&, double, int, int, bool);
 	virtual ~Cashier();
+
+	double salary() const;
 };
 
 #endif /* CASHIER_H_ */
